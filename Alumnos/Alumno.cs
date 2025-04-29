@@ -2,20 +2,22 @@
 {
     internal class Alumno
     {
-        #region "propiedades"
-
+        private const int MAX_MATERIAS = 36;
         private static int ultimoLegajo = 0;
+
+        #region "propiedades"
 
         public int Legajo { get; set; }
         public string? Nombre { get; set; }
         public string? Apellido { get; set; }
+
         private DateTime fecha_nacimiento;
+
         private DateTime fecha_ingreso;
         public int Edad { get; private set; }
         public Boolean Activo { get; set; }
-        private int cant_materia_aprobadas;
 
-        DateTime fecha_actual = DateTime.Now;
+        private int cant_materia_aprobadas;
 
         public DateTime Fecha_Nacimiento
         {
@@ -55,20 +57,40 @@
         {
             Nombre = nombre;
             Apellido = apellido;
-            Fecha_Nacimiento = fecha_nacimiento; // validar bien
-            Fecha_Ingreso = fecha_ingreso; // validar bien
+            Fecha_Nacimiento = fecha_nacimiento;
+            Fecha_Ingreso = fecha_ingreso;
             Activo = activo;
             Cant_Materia_Aprobadas = cant_materia_aprobadas;
+            CalcularEdad(fecha_nacimiento);
+        }
 
-            // calculo la edad de manera dinamica
-            Edad = fecha_actual.Year - fecha_nacimiento.Year;
+        public int CalcularEdad(DateTime fechaNacimiento) 
+        {
+            var todayDate = DateTime.Today;
+            int edad = todayDate.Year - fechaNacimiento.Year;
+
+            if (todayDate.Month < fechaNacimiento.Month || (todayDate.Month == fechaNacimiento.Month && todayDate.Day < fechaNacimiento.Day))
+            {
+                edad--;
+            }
+
+            this.Edad = edad;
+            return edad;
         }
 
         #endregion
+
+        #region "finalizadores"
+        ~Alumno()
+        {
+            Console.WriteLine($"El alumno con Legajo: {Legajo}, Nombre: {Nombre}, Apellido: {Apellido} fue eliminado.");
+        }
+        #endregion
+
         #region "metodos"
         public int Antiguedad(Unidades unidad)
         {
-            
+            DateTime fecha_actual = DateTime.Now;
             int antiguedadAños = fecha_actual.Year - fecha_ingreso.Year;
             int antiguedadMeses = fecha_actual.Month - fecha_ingreso.Month;
 
@@ -94,24 +116,21 @@
 
         public int Materias_No_Aprobadas()
         {
-            // esto puede romper si en el constructor se pasa un valor raro
-            return 36 - Cant_Materia_Aprobadas; 
+            return MAX_MATERIAS - Cant_Materia_Aprobadas; 
         }
 
         public int Edad_De_Ingreso()
         {
-            int edadIngeso = fecha_ingreso.Year - fecha_nacimiento.Year;
-            int edadIngresoMeses = fecha_ingreso.Month - fecha_ingreso.Month;
+            int edad = fecha_ingreso.Year - fecha_nacimiento.Year;
 
-            if (edadIngresoMeses < 0)
+            // Si todavía no cumplió años ese año, restamos 1
+            if (fecha_ingreso.Month < fecha_nacimiento.Month || (fecha_ingreso.Month == fecha_nacimiento.Month && fecha_ingreso.Day < fecha_nacimiento.Day))
             {
-                edadIngeso--;
+                edad--;
             }
 
-            return edadIngeso;
+            return edad;
         }
         #endregion
-
-
     }
 }

@@ -4,7 +4,7 @@ namespace Personas
     {
         public Form1()
         {
-            InitializeComponent();
+            //InitializeComponent();
         }
     }
 }
