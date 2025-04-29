@@ -1,0 +1,59 @@
+# Build artifacts
+bin/
+obj/
+*.dll
+*.exe
+*.pdb
+*.cache
+*.ilk
+*.log
+*.vspscc
+*.vssscc
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Visual Studio Code workspace
+.vscode/
+
+# Visual Studio working folder
+.vs/
+
+# Packages
+*.nupkg
+*.snupkg
+packages/
+
+# Generated files
+*.designer.cs
+*.g.cs
+*.g.i.cs
+*.csproj.user
+*.dbmdl
+*.jfm
+
+# Backup & temporary files
+*.bak
+*.swp
+*.tmp
+*.temp
+~$*
+
+# Publish output
+publish/
+out/
+
+# Resharper files
+_ReSharper*/
+*.DotSettings.user
+
+# Rider files
+.idea/
+
+# Other
+*.tlog
+*.log
+*.ide
