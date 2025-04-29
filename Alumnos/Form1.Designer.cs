@@ -39,17 +39,19 @@
             // dataGridView1
             // 
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(153, 83);
+            dataGridView1.Location = new Point(134, 62);
+            dataGridView1.Margin = new Padding(3, 2, 3, 2);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.Size = new Size(791, 188);
+            dataGridView1.Size = new Size(692, 141);
             dataGridView1.TabIndex = 0;
             // 
             // AgregarAlumnoBoton
             // 
-            AgregarAlumnoBoton.Location = new Point(960, 83);
+            AgregarAlumnoBoton.Location = new Point(840, 62);
+            AgregarAlumnoBoton.Margin = new Padding(3, 2, 3, 2);
             AgregarAlumnoBoton.Name = "AgregarAlumnoBoton";
-            AgregarAlumnoBoton.Size = new Size(153, 29);
+            AgregarAlumnoBoton.Size = new Size(134, 22);
             AgregarAlumnoBoton.TabIndex = 1;
             AgregarAlumnoBoton.Text = "Agregar Alumno";
             AgregarAlumnoBoton.UseVisualStyleBackColor = true;
@@ -57,9 +59,10 @@
             // 
             // BorrarAlumnoBoton
             // 
-            BorrarAlumnoBoton.Location = new Point(960, 161);
+            BorrarAlumnoBoton.Location = new Point(840, 121);
+            BorrarAlumnoBoton.Margin = new Padding(3, 2, 3, 2);
             BorrarAlumnoBoton.Name = "BorrarAlumnoBoton";
-            BorrarAlumnoBoton.Size = new Size(153, 29);
+            BorrarAlumnoBoton.Size = new Size(134, 22);
             BorrarAlumnoBoton.TabIndex = 2;
             BorrarAlumnoBoton.Text = "Borrar Alumno";
             BorrarAlumnoBoton.UseVisualStyleBackColor = true;
@@ -67,9 +70,10 @@
             // 
             // ModificarAlumnoBoton
             // 
-            ModificarAlumnoBoton.Location = new Point(960, 242);
+            ModificarAlumnoBoton.Location = new Point(840, 182);
+            ModificarAlumnoBoton.Margin = new Padding(3, 2, 3, 2);
             ModificarAlumnoBoton.Name = "ModificarAlumnoBoton";
-            ModificarAlumnoBoton.Size = new Size(153, 29);
+            ModificarAlumnoBoton.Size = new Size(134, 22);
             ModificarAlumnoBoton.TabIndex = 3;
             ModificarAlumnoBoton.Text = "Modificar Alumno";
             ModificarAlumnoBoton.UseVisualStyleBackColor = true;
@@ -77,22 +81,25 @@
             // 
             // richTextBox1
             // 
-            richTextBox1.Location = new Point(153, 309);
+            richTextBox1.Location = new Point(134, 232);
+            richTextBox1.Margin = new Padding(3, 2, 3, 2);
             richTextBox1.Name = "richTextBox1";
-            richTextBox1.Size = new Size(486, 120);
+            richTextBox1.Size = new Size(426, 91);
             richTextBox1.TabIndex = 4;
             richTextBox1.Text = "";
+            richTextBox1.TextChanged += richTextBox1_TextChanged;
             // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1505, 723);
+            ClientSize = new Size(1317, 542);
             Controls.Add(richTextBox1);
             Controls.Add(ModificarAlumnoBoton);
             Controls.Add(BorrarAlumnoBoton);
             Controls.Add(AgregarAlumnoBoton);
             Controls.Add(dataGridView1);
+            Margin = new Padding(3, 2, 3, 2);
             Name = "Form1";
             Text = "Form1";
             Load += Form1_Load;

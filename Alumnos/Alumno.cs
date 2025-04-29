@@ -1,4 +1,6 @@
-﻿namespace Alumnos
+﻿using System.Diagnostics.Metrics;
+
+namespace Alumnos
 {
     internal class Alumno
     {
@@ -93,24 +95,38 @@
             DateTime fecha_actual = DateTime.Now;
             int antiguedadAños = fecha_actual.Year - fecha_ingreso.Year;
             int antiguedadMeses = fecha_actual.Month - fecha_ingreso.Month;
+            int dias = (fecha_actual - fecha_ingreso).Days;
 
-            if (antiguedadMeses < 0)
+            // Ajustar los años si el mes actual es anterior al mes de ingreso
+            // o si es el mismo mes pero el día actual es anterior al día de ingreso
+            if (fecha_actual.Month < fecha_ingreso.Month ||
+                (fecha_actual.Month == fecha_ingreso.Month && fecha_actual.Day < fecha_ingreso.Day))
             {
                 antiguedadAños--;
             }
 
+            // Ajustar los meses si es necesario
+            if (fecha_actual.Day < fecha_ingreso.Day)
+            {
+                antiguedadMeses--;
+                if (antiguedadMeses < 0)
+                {
+                    antiguedadMeses += 12;
+                }
+            }
+
             string unidadDescription = unidad.GetDescription();
 
-            switch (unidadDescription)
+            switch (unidad)
             {
-                case "Años":
+                case Unidades.Años:
                     return antiguedadAños;
-                case "Meses":
-                    return (antiguedadAños * 12) + fecha_actual.Month;
-                case "Dias":
-                    return ((antiguedadAños * 365) + fecha_actual.Day); 
+                case Unidades.Meses:
+                    return (antiguedadAños * 12) + antiguedadMeses;
+                case Unidades.Dias:
+                    return dias;
                 default:
-                    return -1;
+                    throw new ArgumentException("Unidad no válida.");
             }
         }
 

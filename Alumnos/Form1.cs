@@ -15,6 +15,10 @@ namespace Alumnos
         {
             dataGridView1.MultiSelect = false;
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
+            // Vincular eventos
+            dataGridView1.SelectionChanged += dataGridView1_SelectionChanged;
+            dataGridView1.CellMouseEnter += dataGridView1_CellMouseEnter;
         }
 
         private void AgregarAlumnoBoton_Click(object sender, EventArgs e)
@@ -115,6 +119,7 @@ namespace Alumnos
                 string nuevoApellido = Interaction.InputBox($"Apellido actual: {alumnoSeleccionado.Apellido}\nIngrese el nuevo apellido (o deje vacío para no modificar):", "Modificar Alumno", alumnoSeleccionado.Apellido);
 
                 string nuevaFechaNacimiento = Interaction.InputBox("Ingrese la fecha de nacimiento (dd/MM/yyyy) (o deje vacío para no modificar):", "Modificar Alumno", "");
+                
                 // Obtener el valor actual de fecha_nacimiento usando reflexión
                 var fieldInfo = typeof(Alumno).GetField("fecha_nacimiento", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
                 if (fieldInfo == null)
@@ -123,8 +128,6 @@ namespace Alumnos
                 }
 
                 DateTime fecha1 = (DateTime)(fieldInfo.GetValue(alumnoSeleccionado) ?? throw new Exception("El valor de 'fecha_nacimiento' es nulo."));
-
-                // Validar y actualizar la fecha si el usuario ingresa un nuevo valor
                 if (!string.IsNullOrWhiteSpace(nuevaFechaNacimiento))
                 {
                     if (!DateTime.TryParseExact(nuevaFechaNacimiento, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out fecha1))
@@ -134,8 +137,6 @@ namespace Alumnos
                 }
 
                 string nuevaFechaIngreso = Interaction.InputBox("Ingrese la fecha de ingreso (dd/MM/yyyy) (o deje vacío para no modificar):", "Modificar Alumno", "");
-                //if (!DateTime.TryParseExact(nuevaFechaIngreso, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime fecha2)) throw new Exception($"La fecha '{nuevaFechaIngreso}' no tiene un formato válido. Use el formato dd/MM/yyyy.");
-                // Obtener el valor actual de fecha_ingreso usando reflexión
                 var fieldInfoIngreso = typeof(Alumno).GetField("fecha_ingreso", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
                 if (fieldInfoIngreso == null)
                 {
@@ -143,8 +144,6 @@ namespace Alumnos
                 }
 
                 DateTime fecha2 = (DateTime)(fieldInfoIngreso.GetValue(alumnoSeleccionado) ?? throw new Exception("El valor de 'fecha_ingreso' es nulo."));
-
-                // Validar y actualizar la fecha si el usuario ingresa un nuevo valor
                 if (!string.IsNullOrWhiteSpace(nuevaFechaIngreso))
                 {
                     if (!DateTime.TryParseExact(nuevaFechaIngreso, "dd/MM/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out fecha2))
@@ -183,6 +182,38 @@ namespace Alumnos
             catch (Exception ex)
             {
                 MessageBox.Show($"Error al modificar el alumno: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void richTextBox1_TextChanged(object sender, EventArgs e)
+        {
+            if (dataGridView1.SelectedRows.Count > 0)
+            {
+                DataGridViewRow selectedRow = dataGridView1.SelectedRows[0];
+                if (selectedRow.DataBoundItem is Alumno alumnoSeleccionado)
+                {
+                    richTextBox1.Text = $"Antigüedad en años: {alumnoSeleccionado.Antiguedad(Unidades.Años)}\n" +
+                                        $"Antigüedad en meses: {alumnoSeleccionado.Antiguedad(Unidades.Meses)}\n" +
+                                        $"Antigüedad en dias: {alumnoSeleccionado.Antiguedad(Unidades.Dias)}\n" +
+                                        $"Materias No Aprobadas: {alumnoSeleccionado.Materias_No_Aprobadas()}\n" +
+                                        $"Edad de Ingreso: {alumnoSeleccionado.Edad_De_Ingreso()} años";
+                }
+            }
+        }
+
+        private void dataGridView1_SelectionChanged(object sender, EventArgs e)
+        {
+            // Forzar la actualización del RichTextBox
+            richTextBox1_TextChanged(sender, e);
+        }
+
+        private void dataGridView1_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0) // Asegurarse de que no sea el encabezado
+            {
+                dataGridView1.Rows[e.RowIndex].Selected = true;
+                // Forzar la actualización del RichTextBox
+                richTextBox1_TextChanged(sender, e);
             }
         }
     }
