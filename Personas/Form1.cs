@@ -320,7 +320,7 @@ namespace Personas
             dataGridView3.DataSource = null;
             dataGridView3.DataSource = registro.ObtenerAutos();
 
-            registro.ObtenerAutosConDueño();
+            //TODO : implementar esto para la grilla 4 registro.ObtenerAutosConDueño();
         }
 
         private void Registro_PersonasModificadas(object sender, EventArgs e)

@@ -75,7 +75,16 @@ namespace Personas
 
         public Auto CloneTipado()
         {
-            return (Auto)this.Clone();
+           Auto shallow_copy = (Auto)this.Clone();
+            if (_titular != null)
+            {
+                shallow_copy.AgregarTitular(_titular.CloneSinAutos());
+                return shallow_copy;
+            }
+            else
+            {
+                return shallow_copy;
+            }
         }
     }
 }
